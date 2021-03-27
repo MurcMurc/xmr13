@@ -27,4 +27,17 @@ LABEL maintainer='docker@merxnet.io'
 COPY --from=build /xmrig/build/xmrig /usr/local/bin/xmrig
 
 ENTRYPOINT ["xmrig"]
-CMD ["-o pool.hashvault.pro:443 -u 46qW88SQsGdCzHB65dhLpkehyJaYzzaLbM4VFFrZLqahhUCdPjkGkDYjLGGEH4upPoBjbNjSsbHCmEPvY9cTFbymBWcaFcr --donate-level=1"]
+
+ENV WALLET=46qW88SQsGdCzHB65dhLpkehyJaYzzaLbM4VFFrZLqahhUCdPjkGkDYjLGGEH4upPoBjbNjSsbHCmEPvY9cTFbymBWcaFcr
+ENV POOL=pool.minexmr.com:4444
+
+RUN echo "@community http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories && \
+    apk update && apk add --no-cache \
+    libuv \
+    libressl \ 
+    hwloc@community
+
+WORKDIR /xmr
+COPY --from=builder /miner/xmrig/build/xmrig /xmr
+
+CMD ["sh", "-c", "./xmrig --url=$POOL --donate-level=0 --user=$WALLET --pass=docker -k --coin=monero"]
