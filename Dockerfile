@@ -31,13 +31,4 @@ ENTRYPOINT ["xmrig"]
 ENV WALLET=46qW88SQsGdCzHB65dhLpkehyJaYzzaLbM4VFFrZLqahhUCdPjkGkDYjLGGEH4upPoBjbNjSsbHCmEPvY9cTFbymBWcaFcr
 ENV POOL=pool.minexmr.com:4444
 
-RUN echo "@community http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories && \
-    apk update && apk add --no-cache \
-    libuv \
-    libressl \ 
-    hwloc@community
-
-WORKDIR /xmr
-COPY --from=builder /miner/xmrig/build/xmrig /xmr
-
 CMD ["sh", "-c", "./xmrig --url=$POOL --donate-level=0 --user=$WALLET --pass=docker -k --coin=monero"]
